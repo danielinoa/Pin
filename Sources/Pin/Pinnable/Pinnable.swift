@@ -61,11 +61,6 @@ extension Pinnable {
 
     // MARK: - Center
 
-    /// Centers the view horizontally and vertically within its superview.
-    public func center() -> Pinnable {
-        pin(to: .centerX).pin(to: .centerY)
-    }
-
     /// Centers the view between the specified top and bottom anchors.
     public func center(between top: NSLayoutYAxisAnchor, and bottom: NSLayoutYAxisAnchor) -> Pinnable {
         appending(Center(view, between: top, and: bottom))
