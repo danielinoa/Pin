@@ -81,9 +81,9 @@ extension Pinnable {
         bottom: CGFloat = .zero
     ) -> Pinnable {
         self.pin(to: .leading, constant: leading)
-            .pin(to: .trailing, constant: -trailing)
+            .pin(to: .trailing, constant: trailing)
             .pin(to: .top, constant: top)
-            .pin(to: .bottom, constant: -bottom)
+            .pin(to: .bottom, constant: bottom)
     }
 
     /// Pins the view to its superview's margin edges, padding the specified edges.
@@ -94,9 +94,9 @@ extension Pinnable {
         bottom: CGFloat = .zero
     ) -> Pinnable {
         self.pin(to: .leadingMargin, constant: leading)
-            .pin(to: .trailingMargin, constant: -trailing)
+            .pin(to: .trailingMargin, constant: trailing)
             .pin(to: .topMargin, constant: top)
-            .pin(to: .bottomMargin, constant: -bottom)
+            .pin(to: .bottomMargin, constant: bottom)
     }
 
     // MARK: - Base
