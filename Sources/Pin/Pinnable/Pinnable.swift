@@ -86,12 +86,6 @@ extension Pinnable {
             .pin(to: .bottom, constant: -bottom)
     }
 
-    /// Pins the view to its superview's edges.
-    public func pinToEdges(padding value: CGFloat) -> Pinnable {
-        pinToEdges(leading: value, trailing: value, top: value, bottom: value)
-    }
-
-
     /// Pins the view to its superview's margin edges, padding the specified edges.
     public func pinToMarginEdges(
         leading: CGFloat = .zero,
@@ -103,11 +97,6 @@ extension Pinnable {
             .pin(to: .trailingMargin, constant: -trailing)
             .pin(to: .topMargin, constant: top)
             .pin(to: .bottomMargin, constant: -bottom)
-    }
-
-    /// Pins the view to its superview's margin edges.
-    public func pinToMarginEdges(padding value: CGFloat) -> Pinnable {
-        pinToMarginEdges(leading: value, trailing: value, top: value, bottom: value)
     }
 
     // MARK: - Base
@@ -150,6 +139,8 @@ extension Pinnable {
     }
 
     /// Pins the view's non-margin attributes to the specified parent attributes.
+    /// - The specified `constant` is adjusted to pushes towards the opposite edge for the `bottom`, `trailing`,
+    /// and `right` attributes
     public func pin(
         to attributes: [NSLayoutConstraint.Attribute],
         relatedBy relation: NSLayoutConstraint.Relation = .equal,
@@ -158,6 +149,7 @@ extension Pinnable {
         priority: UILayoutPriority = .required
     ) -> Pinnable {
         let resolvables: [SuperResolvable] = attributes.map { attribute in
+            let semanticConstant = semanticConstant(constant, for: attribute)
             let childAttribute = nonMarginAttribute(for: attribute)
             let resolvable = BaseSuperResolvable { [self] superview in
                 /// This closure captures the concrete Pinnable object (`self`) when `view` is referenced.
@@ -171,7 +163,7 @@ extension Pinnable {
                     toItem: superview,
                     attribute: attribute,
                     multiplier: multiplier,
-                    constant: constant
+                    constant: semanticConstant
                 )
                 .setPriority(priority)
             }
@@ -277,6 +269,19 @@ extension Pinnable {
         default: marginAttribute = attribute
         }
         return marginAttribute
+    }
+
+    /// Returns a constant that pushes an object against the edge of the specified attribute.
+    /// - For positive values `trailing` and `trailingMargin` attributes move the layout towards the leading edge in left-to-right layouts.
+    /// - For positive values `right` and `rightMargin` attributes move the layout towards the left edge in left-to-right layouts.
+    /// - For positive values `bottom` and `bottomMargin` attributes move the layout towards the top edge in left-to-right layouts.
+    private func semanticConstant(
+        _ constant: CGFloat, for attribute: NSLayoutConstraint.Attribute
+    ) -> CGFloat {
+        switch attribute {
+        case .trailing, .trailingMargin, .right, .rightMargin, .bottom, .bottomMargin: return -constant
+        default: return constant
+        }
     }
 
     /// Adds a new super-resolvable to the end of the list of super-resolvables.
