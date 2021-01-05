@@ -46,3 +46,21 @@ extension Array where Element == NSLayoutConstraint {
         return self
     }
 }
+
+extension NSLayoutConstraint.Attribute {
+
+    /// The center along the both the x-axis and y-axis of the object’s alignment rectangle.
+    public static var center: [NSLayoutConstraint.Attribute] {
+        [.centerX, .centerY]
+    }
+
+    /// The leading, trailing, top, and bottom edges of the object's alignment rectangle.
+    public static var edges: [NSLayoutConstraint.Attribute] {
+        [.leading, .trailing, .top, .bottom]
+    }
+
+    /// The leadingMargin, trailingMargin, topMargin, and bottomMargin edges of the object's alignment rectangle.
+    public static var marginEdges: [NSLayoutConstraint.Attribute] {
+        [.leadingMargin, .trailingMargin, .topMargin, .bottomMargin]
+    }
+}
