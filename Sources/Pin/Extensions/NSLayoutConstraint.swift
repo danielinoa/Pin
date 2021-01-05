@@ -49,6 +49,11 @@ extension Array where Element == NSLayoutConstraint {
 
 extension Array where Element == NSLayoutConstraint.Attribute {
 
+    /// The width and height of the object’s alignment rectangle.
+    public static var size: Self {
+        [.width, .height]
+    }
+
     /// The center along the both the x-axis and y-axis of the object’s alignment rectangle.
     public static var center: Self {
         [.centerX, .centerY]
