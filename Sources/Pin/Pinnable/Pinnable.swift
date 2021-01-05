@@ -128,6 +128,8 @@ extension Pinnable {
     }
 
     /// Pins the view's non-margin attributes to the specified parent attributes.
+    /// - The specified `constant` is adjusted to pushes towards the opposite edge for the `bottom`, `trailing`,
+    /// and `right` attributes
     public func pin(
         to attributes: NSLayoutConstraint.Attribute...,
         relatedBy relation: NSLayoutConstraint.Relation = .equal,
