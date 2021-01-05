@@ -151,6 +151,17 @@ extension Pinnable {
         constant: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
+        pin(to: attributes, relatedBy: relation, multiplier: multiplier, constant: constant, priority: priority)
+    }
+
+    /// Pins the view's non-margin attributes to the specified parent attributes.
+    public func pin(
+        to attributes: [NSLayoutConstraint.Attribute],
+        relatedBy relation: NSLayoutConstraint.Relation = .equal,
+        multiplier: CGFloat = 1,
+        constant: CGFloat = .zero,
+        priority: UILayoutPriority = .required
+    ) -> Pinnable {
         let resolvables: [SuperResolvable] = attributes.map { attribute in
             let childAttribute = nonMarginAttribute(for: attribute)
             let resolvable = BaseSuperResolvable { [self] superview in
