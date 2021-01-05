@@ -149,7 +149,7 @@ extension Pinnable {
         priority: UILayoutPriority = .required
     ) -> Pinnable {
         let resolvables: [SuperResolvable] = attributes.map { attribute in
-            let semanticConstant = semanticConstant(constant, for: attribute)
+            let adjustedConstant = semanticConstant(constant, for: attribute)
             let childAttribute = nonMarginAttribute(for: attribute)
             let resolvable = BaseSuperResolvable { [self] superview in
                 /// This closure captures the concrete Pinnable object (`self`) when `view` is referenced.
@@ -163,7 +163,7 @@ extension Pinnable {
                     toItem: superview,
                     attribute: attribute,
                     multiplier: multiplier,
-                    constant: semanticConstant
+                    constant: adjustedConstant
                 )
                 .setPriority(priority)
             }
