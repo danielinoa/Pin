@@ -2,7 +2,11 @@
 
 ## Introduction
 
-`Pin` is a thin wrapper around `NSLayoutConstraint` and `NSLayoutAnchor` to simplify the assembly of `AutoLayout` constraints.
+**Pin** is a thin wrapper around `NSLayoutConstraint` and `NSLayoutAnchor` to simplify the assembly of `AutoLayout` constraints.
+
+## Usage
+
+The primary API exposed by **Pin** is the `Pinnable` protocol, which is conformed to by `UIView` and exposes methods to layout a view.
 
 ## Installation
 
