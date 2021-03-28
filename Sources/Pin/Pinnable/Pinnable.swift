@@ -21,10 +21,10 @@ public protocol Pinnable: class {
     /// The containment strategy to invoke when adding subviews.
     var subviewingAction: Callback<Pinnable> { get }
 
-    /// The constraints' resolvable closures that are to be resolved by this node's parent.
+    /// The constraints' closures that are to be resolved by this node's parent node.
     var superResolvables: [SuperResolvable] { get }
 
-    /// The constraints' resolvable closures that are to be resolved by this node.
+    /// The constraints' closures that are to be resolved by this node.
     var selfResolvables: [SelfResolvable] { get }
 }
 
@@ -127,7 +127,7 @@ extension Pinnable {
         return appending(constraint)
     }
 
-    /// Pins the view's non-margin attributes to the specified parent attributes.
+    /// Pins the view's non-margin attributes to the specified superview's attributes.
     /// - The specified `constant` is adjusted to push the view towards the opposite edge for the `bottom`, `trailing`,
     /// and `right` attributes.
     public func pin(
@@ -140,7 +140,7 @@ extension Pinnable {
         pin(to: attributes, relatedBy: relation, multiplier: multiplier, constant: constant, priority: priority)
     }
 
-    /// Pins the view's non-margin attributes to the specified parent attributes.
+    /// Pins the view's non-margin attributes to the specified superview's attributes.
     /// - The specified `constant` is adjusted to push the view towards the opposite edge for the `bottom`, `trailing`,
     /// and `right` attributes.
     public func pin(
