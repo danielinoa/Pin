@@ -10,7 +10,7 @@ import SwiftPlus
 // TODO: Instead of returning a new BasePinnable instance at every step, mutate the current instance if possible.
 
 /// A type that can be contained and constrained, and provides modifiers to configure the layout of the associated view.
-public protocol Pinnable: class {
+public protocol Pinnable: AnyObject {
 
     /// The view that constraints will be associated with.
     var view: UIView { get }
