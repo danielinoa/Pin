@@ -3,7 +3,7 @@ import XCTest
 
 final class PinTests: XCTestCase {
 
-    func testActivatingChainCreatesConstraintsOnParentView() {
+    func testActivatingTreeCreatesConstraintsOnParentView() {
         let parentView = UIView()
         let childView = UIView()
         _ = parentView.add(
@@ -12,19 +12,19 @@ final class PinTests: XCTestCase {
         XCTAssertEqual(parentView.constraints.count, 3)
     }
 
-    func testDeactivatingChainRemovesAllConstraintsOnParentView() {
+    func testDeactivatingTreeRemovesAllConstraintsOnParentView() {
         let parentView = UIView()
         let childView = UIView()
-        let chain = parentView.add(
+        let tree = parentView.add(
             childView.pin(to: .centerY, .leading, .trailing)
         )
-        chain.activate()
+        tree.activate()
         XCTAssertEqual(parentView.constraints.count, 3)
-        chain.deactivate()
+        tree.deactivate()
         XCTAssertEqual(parentView.constraints.count, .zero)
     }
 
-    func testActivatingChainAdds2SubviewsOnParentView() {
+    func testActivatingTreeAdds2SubviewsOnParentView() {
         let parentView = UIView()
         let subview1 = UIView()
         let subview2 = UIView()
@@ -37,42 +37,42 @@ final class PinTests: XCTestCase {
         XCTAssertEqual(parentView.subviews.last, subview2)
     }
 
-    func testDeactivatingChainRemoves2SubviewsFromParentView() {
+    func testDeactivatingTreeRemoves2SubviewsFromParentView() {
         let parentView = UIView()
         let subview1 = UIView()
         let subview2 = UIView()
-        let chain = parentView.add(
+        let tree = parentView.add(
             subview1.pin(to: .centerY, .leading, .trailing),
             subview2.pin(to: .edges)
         )
-        chain.activate()
+        tree.activate()
         XCTAssertEqual(parentView.subviews.count, 2)
         XCTAssertEqual(parentView.subviews.first, subview1)
         XCTAssertEqual(parentView.subviews.last, subview2)
-        chain.deactivate()
+        tree.deactivate()
         XCTAssertEqual(parentView.subviews.count, .zero)
     }
 
-    func testTranslatesAutoresizingMaskIntoConstraintsIsOffInChildViewAfterActivating() {
+    func testTranslatesAutoresizingMaskIntoConstraintsIsOffInChildViewAfterActivatingTree() {
         let parentView = UIView()
         let childView = UIView()
-        let chain = parentView.add(
+        let tree = parentView.add(
             childView.pin(to: .centerY, .leading, .trailing)
         )
-        chain.activate()
+        tree.activate()
         XCTAssertFalse(childView.translatesAutoresizingMaskIntoConstraints)
     }
 
-    func testTranslatesAutoresizingMaskIntoConstraintsIsOnInChildViewAfterDeactivating() {
+    func testTranslatesAutoresizingMaskIntoConstraintsIsOnInChildViewAfterDeactivatingTree() {
         let parentView = UIView()
         let childView = UIView()
-        let chain = parentView.add(
+        let tree = parentView.add(
             childView.pin(to: .centerY, .leading, .trailing)
         )
-        chain.activate()
+        tree.activate()
         XCTAssertFalse(childView.translatesAutoresizingMaskIntoConstraints)
 
-        chain.deactivate()
+        tree.deactivate()
         XCTAssertTrue(childView.translatesAutoresizingMaskIntoConstraints)
     }
 }
