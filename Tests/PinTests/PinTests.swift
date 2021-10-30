@@ -52,4 +52,27 @@ final class PinTests: XCTestCase {
         chain.deactivate()
         XCTAssertEqual(parentView.subviews.count, .zero)
     }
+
+    func testTranslatesAutoresizingMaskIntoConstraintsIsOffInChildViewAfterActivating() {
+        let parentView = UIView()
+        let childView = UIView()
+        let chain = parentView.add(
+            childView.pin(to: .centerY, .leading, .trailing)
+        )
+        chain.activate()
+        XCTAssertFalse(childView.translatesAutoresizingMaskIntoConstraints)
+    }
+
+    func testTranslatesAutoresizingMaskIntoConstraintsIsOnInChildViewAfterDeactivating() {
+        let parentView = UIView()
+        let childView = UIView()
+        let chain = parentView.add(
+            childView.pin(to: .centerY, .leading, .trailing)
+        )
+        chain.activate()
+        XCTAssertFalse(childView.translatesAutoresizingMaskIntoConstraints)
+
+        chain.deactivate()
+        XCTAssertTrue(childView.translatesAutoresizingMaskIntoConstraints)
+    }
 }

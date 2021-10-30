@@ -25,9 +25,9 @@ extension Pinnable {
     /// Reverts and deactivates all the constraints under this tree.
     @discardableResult
     public func deactivate() -> Pinnable {
-        view.translatesAutoresizingMaskIntoConstraints = true
         selfResolvables.revert()
         children.forEach { child in
+            child.view.translatesAutoresizingMaskIntoConstraints = true
             child.superResolvables.revert(with: view)
             child.view.removeFromSuperview()
         }
