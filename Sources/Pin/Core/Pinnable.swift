@@ -89,12 +89,12 @@ extension Pinnable {
     /// and `right` attributes.
     public func pin(
         to attributes: NSLayoutConstraint.Attribute...,
-        relatedBy relation: NSLayoutConstraint.Relation = .equal,
+        relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
         offset: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
-        pin(to: attributes, relatedBy: relation, multiplier: multiplier, offset: offset, priority: priority)
+        pin(to: attributes, relation: relation, multiplier: multiplier, offset: offset, priority: priority)
     }
 
     /// Pins the view's non-margin attributes to the specified superview's attributes.
@@ -102,7 +102,7 @@ extension Pinnable {
     /// and `right` attributes.
     public func pin(
         to attributes: [NSLayoutConstraint.Attribute],
-        relatedBy relation: NSLayoutConstraint.Relation = .equal,
+        relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
         offset: CGFloat = .zero,
         priority: UILayoutPriority = .required
