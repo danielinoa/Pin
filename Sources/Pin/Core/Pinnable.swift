@@ -66,7 +66,7 @@ extension Pinnable {
         padding: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
-        pin(to: attributes, relation: relation, multiplier: multiplier, offset: padding, priority: priority)
+        pin(to: attributes, relation: relation, multiplier: multiplier, padding: padding, priority: priority)
     }
 
     /// Pins the view's non-margin attributes to the specified superview's attributes.
@@ -76,11 +76,11 @@ extension Pinnable {
         to attributes: [NSLayoutConstraint.Attribute],
         relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
-        offset: CGFloat = .zero,
+        padding: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
         let resolvables: [SuperResolvable] = attributes.map { attribute in
-            let adjustedConstant = semanticConstant(offset, for: attribute)
+            let adjustedPadding = semanticConstant(padding, for: attribute)
             let childAttribute = nonMarginAttribute(for: attribute)
             let resolvable = BaseSuperResolvable { [self] superview in
                 /// This closure captures `self` (the concrete Pinnable object) in order to access `view`.
@@ -94,7 +94,7 @@ extension Pinnable {
                     toItem: superview,
                     attribute: attribute,
                     multiplier: multiplier,
-                    constant: adjustedConstant
+                    constant: adjustedPadding
                 )
                 .setPriority(priority)
             }
