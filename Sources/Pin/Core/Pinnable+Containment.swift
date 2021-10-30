@@ -23,4 +23,16 @@ extension Pinnable {
             containmentStrategy: containmentStrategy
         )
     }
+
+    // MARK: - Default Containment
+
+    /// Adds the specified Pinnables.
+    public func add(_ pinnables: Pinnable...) -> Pinnable {
+        add(pinnables)
+    }
+
+    /// Adds the specified Pinnables.
+    public func add(_ pinnables: [Pinnable]) -> Pinnable {
+        contain(pinnables, containmentStrategy: { self.view.addSubview($0.view) })
+    }
 }

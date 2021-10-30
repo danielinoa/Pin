@@ -9,14 +9,4 @@ extension UIView: Pinnable {
     public var children: [Pinnable] { .empty }
     public var superResolvables: [SuperResolvable] { .empty }
     public var selfResolvables: [SelfResolvable] { .empty }
-
-    /// Adds the specified Pinnables.
-    public func add(_ pinnables: Pinnable...) -> Pinnable {
-        add(pinnables)
-    }
-
-    /// Adds the specified Pinnables.
-    public func add(_ pinnables: [Pinnable]) -> Pinnable {
-        contain(pinnables, containmentStrategy: { self.addSubview($0.view) })
-    }
 }
