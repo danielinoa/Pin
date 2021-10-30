@@ -37,10 +37,10 @@ extension Pinnable {
         top: CGFloat = .zero,
         bottom: CGFloat = .zero
     ) -> Pinnable {
-        self.pin(to: .leading, constant: leading)
-            .pin(to: .trailing, constant: trailing)
-            .pin(to: .top, constant: top)
-            .pin(to: .bottom, constant: bottom)
+        self.pin(to: .leading, offset: leading)
+            .pin(to: .trailing, offset: trailing)
+            .pin(to: .top, offset: top)
+            .pin(to: .bottom, offset: bottom)
     }
 
     /// Pins the view to its superview's margin edges, padding the specified edges.
@@ -50,10 +50,10 @@ extension Pinnable {
         top: CGFloat = .zero,
         bottom: CGFloat = .zero
     ) -> Pinnable {
-        self.pin(to: .leadingMargin, constant: leading)
-            .pin(to: .trailingMargin, constant: trailing)
-            .pin(to: .topMargin, constant: top)
-            .pin(to: .bottomMargin, constant: bottom)
+        self.pin(to: .leadingMargin, offset: leading)
+            .pin(to: .trailingMargin, offset: trailing)
+            .pin(to: .topMargin, offset: top)
+            .pin(to: .bottomMargin, offset: bottom)
     }
 
     // MARK: - Base
@@ -91,10 +91,10 @@ extension Pinnable {
         to attributes: NSLayoutConstraint.Attribute...,
         relatedBy relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
-        constant: CGFloat = .zero,
+        offset: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
-        pin(to: attributes, relatedBy: relation, multiplier: multiplier, constant: constant, priority: priority)
+        pin(to: attributes, relatedBy: relation, multiplier: multiplier, offset: offset, priority: priority)
     }
 
     /// Pins the view's non-margin attributes to the specified superview's attributes.
@@ -104,11 +104,11 @@ extension Pinnable {
         to attributes: [NSLayoutConstraint.Attribute],
         relatedBy relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
-        constant: CGFloat = .zero,
+        offset: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
         let resolvables: [SuperResolvable] = attributes.map { attribute in
-            let adjustedConstant = semanticConstant(constant, for: attribute)
+            let adjustedConstant = semanticConstant(offset, for: attribute)
             let childAttribute = nonMarginAttribute(for: attribute)
             let resolvable = BaseSuperResolvable { [self] superview in
                 /// This closure captures `self` (the concrete Pinnable object) in order to access `view`.
