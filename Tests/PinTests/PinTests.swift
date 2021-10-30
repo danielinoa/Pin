@@ -53,6 +53,24 @@ final class PinTests: XCTestCase {
         XCTAssertEqual(parentView.subviews.count, .zero)
     }
 
+    func testSubviewOutsideOfTreeIsNotRemovedFromSuperviewAfterDeactivatingTree() {
+        let parentView = UIView()
+        let insideSubview = UIView()
+        let outsideSubview = UIView()
+        let tree = parentView.add(
+            insideSubview.pin(to: .edges)
+        )
+        tree.activate()
+        parentView.addSubview(outsideSubview)
+        XCTAssertEqual(parentView.subviews.count, 2)
+        XCTAssertEqual(parentView.subviews.first, insideSubview)
+        XCTAssertEqual(parentView.subviews.last, outsideSubview)
+        tree.deactivate()
+        XCTAssertEqual(parentView.subviews.count, 1)
+        XCTAssertEqual(parentView.subviews.first, outsideSubview)
+        XCTAssertEqual(parentView.subviews.last, outsideSubview)
+    }
+
     func testTranslatesAutoresizingMaskIntoConstraintsIsOffInChildViewAfterActivatingTree() {
         let parentView = UIView()
         let childView = UIView()
@@ -71,7 +89,6 @@ final class PinTests: XCTestCase {
         )
         tree.activate()
         XCTAssertFalse(childView.translatesAutoresizingMaskIntoConstraints)
-
         tree.deactivate()
         XCTAssertTrue(childView.translatesAutoresizingMaskIntoConstraints)
     }
