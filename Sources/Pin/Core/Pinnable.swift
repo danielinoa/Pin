@@ -37,10 +37,10 @@ extension Pinnable {
         top: CGFloat = .zero,
         bottom: CGFloat = .zero
     ) -> Pinnable {
-        self.pin(to: .leading, offset: leading)
-            .pin(to: .trailing, offset: trailing)
-            .pin(to: .top, offset: top)
-            .pin(to: .bottom, offset: bottom)
+        self.pin(to: .leading, padding: leading)
+            .pin(to: .trailing, padding: trailing)
+            .pin(to: .top, padding: top)
+            .pin(to: .bottom, padding: bottom)
     }
 
     /// Pins the view to its superview's margin edges, padding the specified edges.
@@ -50,10 +50,10 @@ extension Pinnable {
         top: CGFloat = .zero,
         bottom: CGFloat = .zero
     ) -> Pinnable {
-        self.pin(to: .leadingMargin, offset: leading)
-            .pin(to: .trailingMargin, offset: trailing)
-            .pin(to: .topMargin, offset: top)
-            .pin(to: .bottomMargin, offset: bottom)
+        self.pin(to: .leadingMargin, padding: leading)
+            .pin(to: .trailingMargin, padding: trailing)
+            .pin(to: .topMargin, padding: top)
+            .pin(to: .bottomMargin, padding: bottom)
     }
 
     // MARK: - Base
@@ -91,10 +91,10 @@ extension Pinnable {
         to attributes: NSLayoutConstraint.Attribute...,
         relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
-        offset: CGFloat = .zero,
+        padding: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
-        pin(to: attributes, relation: relation, multiplier: multiplier, offset: offset, priority: priority)
+        pin(to: attributes, relation: relation, multiplier: multiplier, offset: padding, priority: priority)
     }
 
     /// Pins the view's non-margin attributes to the specified superview's attributes.
