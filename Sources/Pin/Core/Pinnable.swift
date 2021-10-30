@@ -28,8 +28,6 @@ public protocol Pinnable {
 
 extension Pinnable {
 
-    // MARK: - Base
-
     /// Pins the view's anchor to the specified anchor.
     public func pin<AnchorType, Anchor: NSLayoutAnchor<AnchorType>>(
         _ keyPath: KeyPath<UIView, Anchor>,
