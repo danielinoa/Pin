@@ -7,19 +7,17 @@ import SwiftPlus
 
 // RESOURCES: https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/DebuggingTricksandTips.html#//apple_ref/doc/uid/TP40010853-CH21-SW1
 
-// TODO: Instead of returning a new BasePinnable instance at every step, mutate the current instance if possible.
-
 /// A type that can be contained and constrained, and provides modifiers to configure the layout of the associated view.
-public protocol Pinnable: AnyObject {
+public protocol Pinnable {
 
-    /// The view that constraints will be associated with.
+    /// The view that constraints will be associated to.
     var view: UIView { get }
 
     /// The list of pinnable children.
     var children: [Pinnable] { get }
 
-    /// The containment strategy to invoke when adding subviews.
-    var subviewingAction: Callback<Pinnable> { get }
+    /// The containment strategy to invoke when adding children pinnables or subviews.
+    var containmentStrategy: Callback<Pinnable> { get }
 
     /// The constraints' closures that are to be resolved by this node's parent node.
     var superResolvables: [SuperResolvable] { get }
@@ -29,47 +27,6 @@ public protocol Pinnable: AnyObject {
 }
 
 extension Pinnable {
-
-    // MARK: - Size
-
-    /// Sizes the view's width and height to the specified value.
-    public func size(square value: CGFloat, priority: UILayoutPriority = .required) -> Pinnable {
-        size(width: value, height: value, priority: priority)
-    }
-
-    /// Sizes the view to the specified width and height.
-    public func size(width: CGFloat, height: CGFloat, priority: UILayoutPriority = .required) -> Pinnable {
-        appending(
-            view.widthAnchor.constraint(equalToConstant: width).setPriority(priority),
-            view.heightAnchor.constraint(equalToConstant: height).setPriority(priority)
-        )
-    }
-
-    /// Sizes the view to the specified width.
-    public func size(width: CGFloat, priority: UILayoutPriority = .required) -> Pinnable {
-        appending(
-            view.widthAnchor.constraint(equalToConstant: width).setPriority(priority)
-        )
-    }
-
-    /// Sizes the view to the specified height.
-    public func size(height: CGFloat, priority: UILayoutPriority = .required) -> Pinnable {
-        appending(
-            view.heightAnchor.constraint(equalToConstant: height).setPriority(priority)
-        )
-    }
-
-    // MARK: - Center
-
-    /// Centers the view between the specified top and bottom anchors.
-    public func center(between top: NSLayoutYAxisAnchor, and bottom: NSLayoutYAxisAnchor) -> Pinnable {
-        appending(Center(view, between: top, and: bottom))
-    }
-
-    /// Centers the view between the specified leading and trailing anchors.
-    public func center(between leading: NSLayoutXAxisAnchor, and trailing: NSLayoutXAxisAnchor) -> Pinnable {
-        appending(Center(view, between: leading, and: trailing))
-    }
 
     // MARK: - Edges
 
@@ -154,10 +111,10 @@ extension Pinnable {
             let adjustedConstant = semanticConstant(constant, for: attribute)
             let childAttribute = nonMarginAttribute(for: attribute)
             let resolvable = BaseSuperResolvable { [self] superview in
-                /// This closure captures the concrete Pinnable object (`self`) when `view` is referenced.
-                /// This however does not create a reference cycle because `self` does not end up owning this closure.
-                /// The closure is ultimately owned by the last Pinnable object that is created in the Pinnable chain.
-                /// This is the same mechanism in `subviewingAction`, `subview(...)`, `stack(...)`.
+                /// This closure captures `self` (the concrete Pinnable object) in order to access `view`.
+                /// This however will not create a reference cycle because `self` does not end up owning this closure.
+                /// The closure is ultimately owned by the last Pinnable object that is created in the Pinnable chain, typically the owning parent.
+                /// The same mechanism exists in `subviewingAction`, `subview(...)`, `stack(...)`.
                 NSLayoutConstraint(
                     item: view,
                     attribute: childAttribute,
@@ -174,86 +131,7 @@ extension Pinnable {
         return appending(resolvables)
     }
 
-    // MARK: - Containment
-
-    /// The default containment strategy, UIView.addSubview().
-    public var subviewingAction: Callback<Pinnable> {
-        { self.view.addSubview($0.view) }
-    }
-
-    /// Adds the specified Pinnable's view using its `subviewingAction` strategy.
-    public func subview(_ pinnables: Pinnable...) -> Pinnable {
-        BasePinnable(
-            view: view,
-            children: children + pinnables,
-            selfResolvables: selfResolvables,
-            superResolvables: superResolvables,
-            subviewingAction: subviewingAction
-        )
-    }
-
-    /// Adds the specified Pinnable's view as an arranged-subview under this `UIStackView`.
-    public func stack(
-        _ pinnables: Pinnable...,
-        alignment: UIStackView.Alignment = .fill,
-        axis: NSLayoutConstraint.Axis = .horizontal,
-        distribution: UIStackView.Distribution = .fill,
-        spacing: CGFloat = .zero
-    ) -> Pinnable where Self == UIStackView {
-        self.alignment = alignment
-        self.axis = axis
-        self.distribution = distribution
-        self.spacing = spacing
-        return BasePinnable(
-            view: view,
-            children: pinnables,
-            selfResolvables: selfResolvables,
-            superResolvables: superResolvables,
-            subviewingAction: { [self] pinnable in
-                self.addArrangedSubview(pinnable.view)
-            }
-        )
-    }
-
-    // MARK: - Activation
-
-    /// Resolves and activates all the constraints under this tree.
-    @discardableResult
-    public func activate() -> Pinnable {
-        // Activate self-resolvables
-        selfResolvables.resolve()
-
-        // Activate children's super-resolvables
-        children.forEach { child in
-            child.view.translatesAutoresizingMaskIntoConstraints = false
-            subviewingAction(child)
-            child.superResolvables.resolve(with: view)
-            child.activate()
-        }
-        return self
-    }
-
-    /// Reverts and deactivates all the constraints under this tree.
-    @discardableResult
-    public func deactivate() -> Pinnable {
-        view.translatesAutoresizingMaskIntoConstraints = true
-        selfResolvables.revert()
-        children.forEach { child in
-            child.superResolvables.revert(with: view)
-            child.view.removeFromSuperview()
-        }
-        return self
-    }
-
-    /// Invalidates and schedules constraint updates within the tree.
-    @discardableResult
-    public func invalidate() -> Pinnable {
-        view.setNeedsUpdateConstraints()
-        view.updateConstraints()
-        return self
-    }
-
-    // MARK: - Helpers
+    // MARK: - Adjustments
 
     /// Returns the non-margin equivalent of the specified attribute.
     /// - Note: Passing `.leadingMargin` or `.leading` returns `.leading`.
@@ -286,27 +164,40 @@ extension Pinnable {
         }
     }
 
+    // MARK: - Extensibility
+
     /// Adds a new super-resolvable to the end of the list of super-resolvables.
     @discardableResult
-    private func appending(_ superResolvables: SuperResolvable...) -> Pinnable {
+    public func appending(_ superResolvables: SuperResolvable...) -> Pinnable {
         BasePinnable(
             view: view,
             children: children,
             selfResolvables: selfResolvables,
             superResolvables: self.superResolvables + superResolvables,
-            subviewingAction: subviewingAction
+            containmentStrategy: containmentStrategy
         )
     }
 
     /// Adds a new self-resolvable to the end of the list of self-resolvables.
     @discardableResult
-    private func appending(_ selfResolvables: SelfResolvable...) -> Pinnable {
+    public func appending(_ selfResolvables: SelfResolvable...) -> Pinnable {
         BasePinnable(
             view: view,
             children: children,
             selfResolvables: self.selfResolvables + selfResolvables,
             superResolvables: superResolvables,
-            subviewingAction: subviewingAction
+            containmentStrategy: containmentStrategy
+        )
+    }
+
+    @discardableResult
+    public func appending(_ contain: @escaping Callback<Pinnable>) -> Pinnable {
+        BasePinnable(
+            view: view,
+            children: children,
+            selfResolvables: selfResolvables,
+            superResolvables: superResolvables,
+            containmentStrategy: contain
         )
     }
 }

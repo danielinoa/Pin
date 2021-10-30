@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Pin",
+    platforms: [
+        .iOS(.v13)
+    ],
     products: [
         .library(name: "Pin", targets: ["Pin"]),
     ],

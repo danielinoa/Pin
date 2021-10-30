@@ -9,7 +9,7 @@ final class BasePinnable: Pinnable {
 
     let view: UIView
     let children: [Pinnable]
-    let subviewingAction: Callback<Pinnable>
+    let containmentStrategy: Callback<Pinnable>
     private(set) var selfResolvables: [SelfResolvable]
     private(set) var superResolvables: [SuperResolvable]
 
@@ -18,12 +18,12 @@ final class BasePinnable: Pinnable {
         children: [Pinnable],
         selfResolvables: [SelfResolvable],
         superResolvables: [SuperResolvable],
-        subviewingAction: @escaping Callback<Pinnable>
+        containmentStrategy: @escaping Callback<Pinnable>
     ) {
         self.view = view
         self.children = children
         self.selfResolvables = selfResolvables
         self.superResolvables = superResolvables
-        self.subviewingAction = subviewingAction
+        self.containmentStrategy = containmentStrategy
     }
 }
