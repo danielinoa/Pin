@@ -18,7 +18,7 @@ extension Pinnable {
     }
 }
 
-public final class Center: SuperResolvable {
+private final class Center: SuperResolvable {
 
     private let guide = UILayoutGuide()
     private let constraints: [NSLayoutConstraint]
