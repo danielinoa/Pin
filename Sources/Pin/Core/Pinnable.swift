@@ -28,34 +28,6 @@ public protocol Pinnable {
 
 extension Pinnable {
 
-    // MARK: - Edges
-
-    /// Pins the view to its superview's edges, padding the specified edges.
-    public func pinToEdges(
-        leading: CGFloat = .zero,
-        trailing: CGFloat = .zero,
-        top: CGFloat = .zero,
-        bottom: CGFloat = .zero
-    ) -> Pinnable {
-        self.pin(to: .leading, padding: leading)
-            .pin(to: .trailing, padding: trailing)
-            .pin(to: .top, padding: top)
-            .pin(to: .bottom, padding: bottom)
-    }
-
-    /// Pins the view to its superview's margin edges, padding the specified edges.
-    public func pinToMarginEdges(
-        leading: CGFloat = .zero,
-        trailing: CGFloat = .zero,
-        top: CGFloat = .zero,
-        bottom: CGFloat = .zero
-    ) -> Pinnable {
-        self.pin(to: .leadingMargin, padding: leading)
-            .pin(to: .trailingMargin, padding: trailing)
-            .pin(to: .topMargin, padding: top)
-            .pin(to: .bottomMargin, padding: bottom)
-    }
-
     // MARK: - Base
 
     /// Pins the view's anchor to the specified anchor.
