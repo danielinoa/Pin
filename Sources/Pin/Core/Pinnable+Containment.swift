@@ -13,7 +13,7 @@ extension Pinnable {
         { _ in fatalError("\(self) has no containment strategy.") }
     }
 
-    /// Adds the specified Pinnables using the `contain` strategy.
+    /// Adds the specified Pinnables using the `containmentStrategy` strategy.
     public func contain(_ pinnables: [Pinnable], containmentStrategy: @escaping Callback<Pinnable>) -> Pinnable {
         BasePinnable(
             view: view,
