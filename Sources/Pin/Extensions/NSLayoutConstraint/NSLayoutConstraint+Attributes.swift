@@ -16,12 +16,12 @@ extension Array where Element == NSLayoutConstraint.Attribute {
         [.centerX, .centerY]
     }
 
-    /// The leading, trailing, top, and bottom edges of the object's alignment rectangle.
+    /// The `leading`, `trailing`, `top`, and `bottom` edges of the object's alignment rectangle.
     public static var edges: Self {
         [.leading, .trailing, .top, .bottom]
     }
 
-    /// The leadingMargin, trailingMargin, topMargin, and bottomMargin edges of the object's alignment rectangle.
+    /// The `leadingMargin`, `trailingMargin`, `topMargin`, and `bottomMargin` edges of the object's alignment rectangle.
     public static var marginEdges: Self {
         [.leadingMargin, .trailingMargin, .topMargin, .bottomMargin]
     }

@@ -5,6 +5,7 @@
 import UIKit
 import SwiftPlus
 
+/// The base concrete implementation of the Pinnable. It serves as the default container node in a Pinnable tree.
 final class BasePinnable: Pinnable {
 
     let view: UIView
