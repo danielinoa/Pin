@@ -11,11 +11,8 @@ let package = Package(
     products: [
         .library(name: "Pin", targets: ["Pin"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/danielinoa/SwiftPlus.git", .branch("main"))
-    ],
     targets: [
-        .target(name: "Pin", dependencies: ["SwiftPlus"]),
+        .target(name: "Pin"),
         .testTarget(name: "PinTests", dependencies: ["Pin"]),
     ]
 )

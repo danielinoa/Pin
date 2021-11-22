@@ -22,7 +22,7 @@ extension Pinnable {
 
     /// Adds the specified Pinnables.
     public func add(_ pinnables: [Pinnable]) -> Pinnable {
-        contain(pinnables, containmentStrategy: { view.addSubview($0.view) })
+        contain(pinnables, using: { view.addSubview($0.view) })
     }
 
     // MARK: - Custom Containment

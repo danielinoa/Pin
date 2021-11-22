@@ -111,6 +111,6 @@ private final class Pin: SuperResolvable {
 
     func revert(with superview: UIView) {
         constraints.deactivate()
-        constraints = .empty
+        constraints = []
     }
 }

@@ -6,7 +6,7 @@ import UIKit
 
 extension UIView: Pinnable {
     public var view: UIView { self }
-    public var children: [Pinnable] { .empty }
-    public var superResolvables: [SuperResolvable] { .empty }
-    public var selfResolvables: [SelfResolvable] { .empty }
+    public var children: [Pinnable] { [] }
+    public var superResolvables: [SuperResolvable] { [] }
+    public var selfResolvables: [SelfResolvable] { [] }
 }
