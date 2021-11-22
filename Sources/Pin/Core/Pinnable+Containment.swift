@@ -6,22 +6,11 @@ import SwiftPlus
 
 extension Pinnable {
 
-    // MARK: - Containment
+    public typealias ContainmentStrategy = Callback<Pinnable>
 
-    /// The default containment strategy. For example: UIView.addSubview.
-    public var containmentStrategy: Callback<Pinnable> {
+    /// The containment strategy. For example: `UIView.addSubview`.
+    public var containmentStrategy: ContainmentStrategy {
         { _ in fatalError("\(self) has no containment strategy.") }
-    }
-
-    /// Adds the specified Pinnables using the `containmentStrategy` strategy.
-    public func contain(_ pinnables: [Pinnable], containmentStrategy: @escaping Callback<Pinnable>) -> Pinnable {
-        BasePinnable(
-            view: view,
-            children: children + pinnables,
-            selfResolvables: selfResolvables,
-            superResolvables: superResolvables,
-            containmentStrategy: containmentStrategy
-        )
     }
 
     // MARK: - Default Containment
@@ -33,6 +22,31 @@ extension Pinnable {
 
     /// Adds the specified Pinnables.
     public func add(_ pinnables: [Pinnable]) -> Pinnable {
-        contain(pinnables, containmentStrategy: { self.view.addSubview($0.view) })
+        contain(pinnables, containmentStrategy: { view.addSubview($0.view) })
+    }
+
+    // MARK: - Custom Containment
+
+    /// Adds the specified child Pinnables by setting and using the specified `containmentStrategy` strategy.
+    public func contain(_ pinnables: [Pinnable], using: @escaping ContainmentStrategy) -> Pinnable {
+        BasePinnable(
+            view: view,
+            children: children + pinnables,
+            selfResolvables: selfResolvables,
+            superResolvables: superResolvables,
+            containmentStrategy: containmentStrategy
+        )
+    }
+
+    /// Set the specified `containmentStrategy` strategy to contain child Pinnables.
+    @discardableResult
+    public func contain(using: @escaping ContainmentStrategy) -> Pinnable {
+        BasePinnable(
+            view: view,
+            children: children,
+            selfResolvables: selfResolvables,
+            superResolvables: superResolvables,
+            containmentStrategy: containmentStrategy
+        )
     }
 }

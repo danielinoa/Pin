@@ -51,15 +51,4 @@ extension Pinnable {
             containmentStrategy: containmentStrategy
         )
     }
-
-    @discardableResult
-    public func appending(_ containmentStrategy: @escaping Callback<Pinnable>) -> Pinnable {
-        BasePinnable(
-            view: view,
-            children: children,
-            selfResolvables: selfResolvables,
-            superResolvables: superResolvables,
-            containmentStrategy: containmentStrategy
-        )
-    }
 }
