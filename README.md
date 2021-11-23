@@ -11,7 +11,9 @@ Building rule-based layouts has been made easier with the introduction of `NSLay
 ### How
 `Pin` works by assembling a tree of nodes containing a view and its associated constraints, and once activated at the root it will start resolving constraints in a depth-first manner. If stored, a tree can be also be deactivated. Deactivation removes any artifacts added in the activation process and reverts all constraints.
 
-# Installation
+# Usage
+
+## Installation
 
 To install using Swift Package Manager, add this to the dependencies section in your `Package.swift` file:
 
@@ -19,7 +21,7 @@ To install using Swift Package Manager, add this to the dependencies section in 
 .package(url: "https://github.com/danielinoa/Pin.git", .branch("main"))
 ```
 
-## Usage
+## Integration
 
 The primary API exposed by **Pin** is the `Pinnable` protocol, which is conformed to by `UIView` and exposes functions to layout a view.
 
