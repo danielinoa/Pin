@@ -3,14 +3,13 @@
 //
 
 import UIKit
-import SwiftPlus
 
 /// The base concrete implementation of the Pinnable. It serves as the default container node in a Pinnable tree.
 final class BasePinnable: Pinnable {
 
     let view: UIView
     let children: [Pinnable]
-    let containmentStrategy: Callback<Pinnable>
+    let containmentStrategy: ContainmentStrategy
     private(set) var selfResolvables: [SelfResolvable]
     private(set) var superResolvables: [SuperResolvable]
 
@@ -19,7 +18,7 @@ final class BasePinnable: Pinnable {
         children: [Pinnable],
         selfResolvables: [SelfResolvable],
         superResolvables: [SuperResolvable],
-        containmentStrategy: @escaping Callback<Pinnable>
+        containmentStrategy: @escaping ContainmentStrategy
     ) {
         self.view = view
         self.children = children

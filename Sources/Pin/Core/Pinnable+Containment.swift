@@ -2,11 +2,7 @@
 //  Created by Daniel Inoa on 10/29/21.
 //
 
-import SwiftPlus
-
 extension Pinnable {
-
-    public typealias ContainmentStrategy = Callback<Pinnable>
 
     /// The containment strategy. For example: `UIView.addSubview`.
     public var containmentStrategy: ContainmentStrategy {

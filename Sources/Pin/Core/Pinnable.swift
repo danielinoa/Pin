@@ -3,9 +3,8 @@
 //
 
 import UIKit
-import SwiftPlus
 
-// RESOURCES: https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/DebuggingTricksandTips.html#//apple_ref/doc/uid/TP40010853-CH21-SW1
+public typealias ContainmentStrategy = (Pinnable) -> Void
 
 /// A type that can be contained and constrained, and provides modifiers to configure the layout of the associated view.
 public protocol Pinnable {
@@ -17,7 +16,7 @@ public protocol Pinnable {
     var children: [Pinnable] { get }
 
     /// The containment strategy to invoke when adding children pinnables or subviews.
-    var containmentStrategy: Callback<Pinnable> { get }
+    var containmentStrategy: ContainmentStrategy { get }
 
     /// The constraints' closures that are to be resolved by this node's parent node.
     var superResolvables: [SuperResolvable] { get }

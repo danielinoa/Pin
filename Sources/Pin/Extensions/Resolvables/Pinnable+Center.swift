@@ -3,7 +3,6 @@
 //
 
 import UIKit
-import SwiftPlus
 
 extension Pinnable {
 
