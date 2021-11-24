@@ -1,6 +1,6 @@
 <h1 align=center>Pin</h1>
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/972877/142989537-1dd04e1f-4a0f-432d-9983-dcaef70796d7.jpg" width="200" max-width="90%" alt=“Pin” />
+    <img src="https://user-images.githubusercontent.com/972877/143309795-78be2e80-05bd-4871-8a0c-2dcf4eb7cd4b.jpg" width="200" max-width="90%" alt=“Pin” />
 </p>
 
 # Introduction
