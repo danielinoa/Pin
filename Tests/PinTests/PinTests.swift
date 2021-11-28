@@ -92,4 +92,20 @@ final class PinTests: XCTestCase {
         tree.deactivate()
         XCTAssertTrue(childView.translatesAutoresizingMaskIntoConstraints)
     }
+
+    // MARK: - Custom Containment
+
+    func testCustomContainmentStrategyIsExecuted() {
+        var containmentCount: Int = .zero
+        let parentView = UIView()
+        let childView = UIView()
+        let tree = parentView.contain { child in
+            parentView.addSubview(child.view)
+            containmentCount += 1
+        }.add(
+            childView.pin(to: .centerY, .leading, .trailing)
+        )
+        tree.activate()
+        XCTAssertEqual(containmentCount, 1)
+    }
 }
