@@ -122,9 +122,9 @@ stackView.stack(
 
 ### Extending `Pinnable` with custom operators
 
-All operators (`.pin()`, `.center()`, `.size()`, etc) in `Pin` are defined as extensions of the [`Pinnable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/Pinnable.swift) protocol.
+All operators (`pin()`, `center()`, `size()`, etc) in `Pin` are defined as extensions of the [`Pinnable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/Pinnable.swift) protocol.
 
-The [`.center()`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) operator, backed by the [`Center`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) class, is an example of how `Pinnable` can be extended to create layouts not possible with the basic `pin(to:)`. While `.pin(to: .center)` centers a view within a parent view, [`.center(between:and:)`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) centers a view within any two anchors regardless of where in the view hierarchy those anchors reside.
+The [`center()`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) operator, backed by the [`Center`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) class, is an example of how `Pinnable` can be extended to create layouts not possible with the basic `pin(to:)`. While `pin(to: .center)` centers a view within a parent view, [`center(between:and:)`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) centers a view within any two anchors regardless of where in the view hierarchy those anchors reside.
 
 Operators can be built on top of existing operators, or can be backed by types that conform to either [`SuperResolvable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/SuperResolvable.swift) or [`SelfResolvable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/SelfResolvable.swift).
 
