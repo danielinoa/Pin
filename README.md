@@ -34,7 +34,7 @@ The most used functions in this library are `add()`, `pin(to:)`, and `activate()
 - `pin(to:)` constrains a view within a parent using a any number of attributes (`leading`, `top`, `centerX`, `width`, etc).
 - `activate()` actives the tree of constraints.
 
-To further illustrate `Pin` let's go over some common operations we may leverage when creating a layout.
+To further illustrate `Pin`'s API let's go over some common operations we may leverage when creating a layout.
 
 To start let's import the dependencies.
 ```swift
@@ -99,10 +99,44 @@ parent.add(
 .activate()
 ```
 
+### Adding views using a custom containment strategy
+
+```swift
+extension Pinnable where Self: UIStackView {
+
+    /// Adds the specified Pinnable's view as an arranged-subview under this `UIStackView`.
+    public func stack(_ pinnables: Pinnable...) -> Pinnable {
+        add(pinnables).contain(using: {
+            self.addArrangedSubview($0.view)
+        })
+    }
+}
+
+let stackView = UIStackView()
+let child = UIView()
+stackView.stack(
+    child.size(height: 100)
+)
+.activate()
+```
+
+### Extending `Pinnable` with custom operators
+
+All operators (`.pin()`, `.center()`, `.size()`, etc) in `Pin` are defined as extensions of the [`Pinnable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/Pinnable.swift) protocol.
+
+The [`.center()`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) operator, backed by the [`Center`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) class, is an example of how `Pinnable` can be extended to create layouts not possible with just `NSLayoutConstraint.Attribute`. While `.pin(to: .center)` centers a view within a parent view, [`.center(between:and:)`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) centers a view within any two anchors regardless of where in the view hierarchy those anchors reside.
+
+Operators can be built on top of existing operators, or can be backed by types that conform to either [`SuperResolvable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/SuperResolvable.swift) or [`SelfResolvable`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Core/SelfResolvable.swift).
+
+- A `SuperResolvable` represents the future assembly and activation of a constraint (or set of constraints) for a view that needs its designated superview to satisfy its layout requirements. [`Center`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BCenter.swift) and [`Pin`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BPin.swift) are examples of concrete `SuperResolvable`s.
+
+- A `SelfResolvable` represents the future assembly and activation of a constraint (or set of constraints) for a view that satisfy its layout requirements without a superview. `NSLayoutConstraint` has implicit conformance to `SelfResolvable`. 
+The [`size(width:height:)`](https://github.com/danielinoa/Pin/blob/main/Sources/Pin/Extensions/Resolvables/Pinnable%2BSize.swift) operator is a good application of `SelfResolvable` given that size constraints do not require a parent view to be satisfied.
+
 # Contributing
 
 Feel free to open an issue if you have questions about how to use Pin, or think you may have found a bug.
 
 # Credits
 
-`Pin` is primarily the work of Daniel Inoa.
+`Pin` is primarily the work of [Daniel Inoa](https://github.com/danielinoa).
