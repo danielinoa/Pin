@@ -15,14 +15,14 @@ public protocol Pinnable {
     /// The list of pinnable children.
     var children: [Pinnable] { get }
 
-    /// The containment strategy to invoke when adding children pinnables or subviews.
-    var containmentStrategy: ContainmentStrategy { get }
+    /// The constraints' closures that are to be resolved by this node.
+    var selfResolvables: [SelfResolvable] { get }
 
     /// The constraints' closures that are to be resolved by this node's parent node.
     var superResolvables: [SuperResolvable] { get }
 
-    /// The constraints' closures that are to be resolved by this node.
-    var selfResolvables: [SelfResolvable] { get }
+    /// The containment strategy to invoke when adding children pinnables or subviews.
+    var containmentStrategy: ContainmentStrategy { get }
 }
 
 extension Pinnable {

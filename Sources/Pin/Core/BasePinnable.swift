@@ -7,11 +7,20 @@ import UIKit
 /// The base concrete implementation of the Pinnable. It serves as the default container node in a Pinnable tree.
 final class BasePinnable: Pinnable {
 
+    /// The view that constraints will be associated to.
     let view: UIView
+
+    /// The list of pinnable children.
     let children: [Pinnable]
-    let containmentStrategy: ContainmentStrategy
+
+    /// The constraints' closures that are to be resolved by this node.
     private(set) var selfResolvables: [SelfResolvable]
+
+    /// The constraints' closures that are to be resolved by this node's parent node.
     private(set) var superResolvables: [SuperResolvable]
+
+    /// The containment strategy to invoke when adding children pinnables or subviews.
+    let containmentStrategy: ContainmentStrategy
 
     init(
         view: UIView,
