@@ -10,6 +10,7 @@ extension Pinnable {
     /// - Parameters:
     ///   - top: The top-most vertical anchor.
     ///   - bottom: The bottom-most vertical anchor.
+    /// - Returns: The Pinnable node that centers associated view.
     public func center(between top: NSLayoutYAxisAnchor, and bottom: NSLayoutYAxisAnchor) -> Pinnable {
         appending(Center(view, between: top, and: bottom))
     }
@@ -18,6 +19,7 @@ extension Pinnable {
     /// - Parameters:
     ///   - leading: The top-most horizontal anchor.
     ///   - trailing: The trailing-most horizontal anchor.
+    /// - Returns: The Pinnable node that centers associated view.
     public func center(between leading: NSLayoutXAxisAnchor, and trailing: NSLayoutXAxisAnchor) -> Pinnable {
         appending(Center(view, between: leading, and: trailing))
     }
