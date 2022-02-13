@@ -7,7 +7,7 @@ import UIKit
 extension Pinnable {
 
     /// Adds the specified Pinnables.
-    func add(@PinnableBuilder _ build: () -> PinnableBuilderResult) -> Pinnable {
+    public func add(@PinnableBuilder _ build: () -> PinnableBuilderResult) -> Pinnable {
         let result = build().flattened()
         return add(result)
     }
