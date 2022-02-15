@@ -47,11 +47,11 @@ import UIKit
 ```swift
 let parent = UIView()
 let child = UIView()
-parent.add(
+parent.add {
     child.pin(to: .leading, .trailing, .top, .bottom) 
     // or 
     child.pin(to: .edges)
-)
+}
 .activate()
 ``` 
 
@@ -60,11 +60,11 @@ parent.add(
 ```swift
 let parent = UIView()
 let child = UIView()
-parent.add(
+parent.add {
     child.pin(to: .centerX, centerY) 
     // or 
     child.pin(to: .center)
-)
+}
 .activate()
 ``` 
 
@@ -73,11 +73,11 @@ parent.add(
 ```swift
 let parent = UIView()
 let child = UIView()
-parent.add(
+parent.add {
     child
         .size(height: 100)
         .pin(to: .width)
-)
+}
 .activate()
 ```
 
@@ -87,15 +87,15 @@ parent.add(
 let parent = UIView()
 let child = UIView()
 let grandChild = UIView()
-parent.add(
+parent.add {
     child
         .size(height: 100)
         .pin(to: .width)
-        .add(
+        .add {
             grandChild
                 .pin(to: .size, .center)
-        )
-)
+        }
+}
 .activate()
 ```
 
