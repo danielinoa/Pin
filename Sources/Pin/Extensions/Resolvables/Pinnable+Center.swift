@@ -17,7 +17,7 @@ extension Pinnable {
 
     /// Centers the view between the specified leading and trailing anchors.
     /// - Parameters:
-    ///   - leading: The top-most horizontal anchor.
+    ///   - leading: The leading-most horizontal anchor.
     ///   - trailing: The trailing-most horizontal anchor.
     /// - Returns: The Pinnable node that centers associated view.
     public func center(between leading: NSLayoutXAxisAnchor, and trailing: NSLayoutXAxisAnchor) -> Pinnable {
