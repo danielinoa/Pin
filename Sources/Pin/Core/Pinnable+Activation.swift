@@ -9,8 +9,6 @@ extension Pinnable {
     /// Resolves and activates all the constraints under this tree.
     @discardableResult
     public func activate() -> Pinnable {
-        // Activate self-resolvables
-        selfResolvables.resolve()
 
         // Activate children's super-resolvables
         children.forEach { child in
@@ -19,6 +17,10 @@ extension Pinnable {
             child.superResolvables.resolve(with: view)
             child.activate()
         }
+
+        // Activate self-resolvables
+        selfResolvables.resolve()
+
         return self
     }
 
