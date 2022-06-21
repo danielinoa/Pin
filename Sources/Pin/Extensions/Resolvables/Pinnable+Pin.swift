@@ -51,7 +51,7 @@ private final class Pin: SuperResolvable {
     ) {
         constraintProviders = attributes.map { attribute in
             let adjustedPadding = Self.semanticConstant(padding, for: attribute)
-            let childAttribute = Self.nonMarginAttribute(for: attribute)
+            let nonMarginAttribute = Self.nonMarginAttribute(for: attribute)
             return { superview in
                 /// This closure captures `self` (the concrete Pinnable object) in order to access `view`.
                 /// This however will not create a reference cycle because `self` does not end up owning this closure.
@@ -59,7 +59,7 @@ private final class Pin: SuperResolvable {
                 /// The same mechanism exists in `subviewingAction`, `subview(...)`, `stack(...)`.
                 NSLayoutConstraint(
                     item: view,
-                    attribute: childAttribute,
+                    attribute: nonMarginAttribute,
                     relatedBy: relation,
                     toItem: superview,
                     attribute: attribute,
