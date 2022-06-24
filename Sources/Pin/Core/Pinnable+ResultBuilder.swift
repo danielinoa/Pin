@@ -42,10 +42,16 @@ public enum PinnableBuilder {
 /// and not to be used within a `Pinnable` tree.
 public struct PinnableBuilderResult: Pinnable {
 
-    public var view: UIView { fatalError("PinnableBuilderResult is not be used as a Pinnable") }
-    public var children: [Pinnable] { fatalError("PinnableBuilderResult is not be used as a Pinnable") }
-    public var superResolvables: [SuperResolvable] { fatalError("PinnableBuilderResult is not be used as a Pinnable") }
-    public var selfResolvables: [SelfResolvable] { fatalError("PinnableBuilderResult is not be used as a Pinnable") }
+    public var view: UIView { fatal() }
+    public var children: [Pinnable] { fatal() }
+    public var superResolvables: [SuperResolvable] { fatal() }
+    public var selfResolvables: [SelfResolvable] { fatal() }
+
+    private func fatal() -> Never {
+        fatalError(
+            "PinnableBuilderResult is only meant to group expressions and cannot participate in a Pinnable layout."
+        )
+    }
 
     fileprivate let pinnables: [Pinnable]
 
