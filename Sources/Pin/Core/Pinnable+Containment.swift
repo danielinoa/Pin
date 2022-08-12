@@ -17,6 +17,11 @@ extension Pinnable {
     }
 
     /// Adds the specified Pinnables.
+    public func add(@PinnableBuilder _ build: () -> PinnableBuilderResult) -> Pinnable {
+        add(build().flattened())
+    }
+
+    /// Adds the specified Pinnables.
     public func add(_ pinnables: [Pinnable]) -> Pinnable {
         BasePinnable(
             view: view,

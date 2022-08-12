@@ -4,15 +4,6 @@
 
 import UIKit
 
-extension Pinnable {
-
-    /// Adds the specified Pinnables.
-    public func add(@PinnableBuilder _ build: () -> PinnableBuilderResult) -> Pinnable {
-        let result = build().flattened()
-        return add(result)
-    }
-}
-
 @resultBuilder
 public enum PinnableBuilder {
 
@@ -60,7 +51,7 @@ public struct PinnableBuilderResult: Pinnable {
     }
 }
 
-fileprivate extension PinnableBuilderResult {
+extension PinnableBuilderResult {
 
     /// Returns a `Pinnable` array, where instances of `PinnableBuilderResult` are recursively replaced
     /// with its underlying `pinnables`.
