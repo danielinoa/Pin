@@ -12,7 +12,7 @@ extension Pinnable where Self: UIStackView  {
     }
 
     /// Adds the specified Pinnable's view as an arranged-subview under this `UIStackView`.
-    public func _stack(@PinnableBuilder _ build: () -> PinnableBuilderResult) -> Pinnable {
+    public func stack(@PinnableBuilder _ build: () -> PinnableBuilderResult) -> Pinnable {
         stack(build().flattened())
     }
 
