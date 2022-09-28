@@ -135,7 +135,7 @@ The [`size(width:height:)`](https://github.com/danielinoa/Pin/blob/main/Sources/
 
 # Contributing
 
-Feel free to open an issue if you have questions about how to use Pin, or think you may have found a bug.
+Feel free to open an issue if you have questions about how to use `Pin`, discovered a bug, or want to improve the implementation or interface.
 
 # Credits
 
