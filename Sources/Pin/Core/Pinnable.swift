@@ -4,8 +4,6 @@
 
 import UIKit
 
-public typealias ContainmentStrategy = (Pinnable) -> Void
-
 /// A type that can be contained and constrained, and provides modifiers to configure the layout of the associated view.
 public protocol Pinnable {
 
