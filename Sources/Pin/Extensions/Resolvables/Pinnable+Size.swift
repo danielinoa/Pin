@@ -14,15 +14,15 @@ extension Pinnable {
     /// Sizes the view to the specified width and height.
     public func size(width: CGFloat, height: CGFloat, priority: UILayoutPriority = .required) -> Pinnable {
         appending(
-            view.widthAnchor.constraint(equalToConstant: width).setPriority(priority),
-            view.heightAnchor.constraint(equalToConstant: height).setPriority(priority)
+            pinnableView.widthAnchor.constraint(equalToConstant: width).setPriority(priority),
+            pinnableView.heightAnchor.constraint(equalToConstant: height).setPriority(priority)
         )
     }
 
     /// Sizes the view to the specified width.
     public func size(width: CGFloat, priority: UILayoutPriority = .required) -> Pinnable {
         appending(
-            view.widthAnchor.constraint(equalToConstant: width).setPriority(priority)
+            pinnableView.widthAnchor.constraint(equalToConstant: width).setPriority(priority)
         )
     }
 
@@ -51,7 +51,7 @@ extension Pinnable {
         constant: CGFloat
     ) -> NSLayoutConstraint {
         .init(
-            item: view,
+            item: pinnableView,
             attribute: attribute,
             relatedBy: relation,
             toItem: nil,

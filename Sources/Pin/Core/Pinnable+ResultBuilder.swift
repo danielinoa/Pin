@@ -33,8 +33,8 @@ public enum PinnableBuilder {
 /// and not to be used within a `Pinnable` tree.
 public struct PinnableBuilderResult: Pinnable {
 
-    public var view: UIView { fatal() }
-    public var children: [Pinnable] { fatal() }
+    public var pinnableView: UIView { fatal() }
+    public var pinnableChildren: [Pinnable] { fatal() }
     public var superResolvables: [SuperResolvable] { fatal() }
     public var selfResolvables: [SelfResolvable] { fatal() }
 

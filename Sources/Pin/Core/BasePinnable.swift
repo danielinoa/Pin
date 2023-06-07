@@ -8,10 +8,10 @@ import UIKit
 final class BasePinnable: Pinnable {
 
     /// The view that constraints will be associated to.
-    let view: UIView
+    let pinnableView: UIView
 
     /// The list of pinnable children.
-    let children: [Pinnable]
+    let pinnableChildren: [Pinnable]
 
     /// The constraints' closures that are to be resolved by this node.
     private(set) var selfResolvables: [SelfResolvable]
@@ -29,8 +29,8 @@ final class BasePinnable: Pinnable {
         superResolvables: [SuperResolvable],
         containmentStrategy: @escaping ContainmentStrategy
     ) {
-        self.view = view
-        self.children = children
+        self.pinnableView = view
+        self.pinnableChildren = children
         self.selfResolvables = selfResolvables
         self.superResolvables = superResolvables
         self.containmentStrategy = containmentStrategy

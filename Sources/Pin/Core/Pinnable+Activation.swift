@@ -20,8 +20,8 @@ extension Pinnable {
     }
 
     private func composeViewTree() {
-        children.forEach { child in
-            child.view.translatesAutoresizingMaskIntoConstraints = false
+        pinnableChildren.forEach { child in
+            child.pinnableView.translatesAutoresizingMaskIntoConstraints = false
             (self as? BasePinnable)?.containmentStrategy(child)
             child.composeViewTree()
         }
@@ -29,8 +29,8 @@ extension Pinnable {
 
     private func resolveResolvables() {
         // Activate children's super-resolvables
-        children.forEach { child in
-            child.superResolvables.resolve(with: view)
+        pinnableChildren.forEach { child in
+            child.superResolvables.resolve(with: pinnableView)
             child.resolveResolvables()
         }
 
@@ -42,10 +42,10 @@ extension Pinnable {
     @discardableResult
     public func deactivate() -> Pinnable {
         selfResolvables.revert()
-        children.forEach { child in
-            child.view.translatesAutoresizingMaskIntoConstraints = true
-            child.superResolvables.revert(with: view)
-            child.view.removeFromSuperview()
+        pinnableChildren.forEach { child in
+            child.pinnableView.translatesAutoresizingMaskIntoConstraints = true
+            child.superResolvables.revert(with: pinnableView)
+            child.pinnableView.removeFromSuperview()
         }
         return self
     }
@@ -53,8 +53,8 @@ extension Pinnable {
     /// Invalidates and schedules constraint updates within the tree.
     @discardableResult
     public func invalidate() -> Pinnable {
-        view.setNeedsUpdateConstraints()
-        view.updateConstraints()
+        pinnableView.setNeedsUpdateConstraints()
+        pinnableView.updateConstraints()
         return self
     }
 }

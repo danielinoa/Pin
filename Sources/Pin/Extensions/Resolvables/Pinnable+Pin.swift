@@ -30,7 +30,7 @@ extension Pinnable {
         priority: UILayoutPriority = .required
     ) -> Pinnable {
         let pin = Pin(
-            view: view, to: attributes, relation: relation, multiplier: multiplier, padding: padding, priority: priority
+            view: pinnableView, to: attributes, relation: relation, multiplier: multiplier, padding: padding, priority: priority
         )
         return appending(pin)
     }

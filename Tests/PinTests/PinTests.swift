@@ -100,7 +100,7 @@ final class PinTests: XCTestCase {
         let parentView = UIView()
         let childView = UIView()
         let tree = parentView.contain { child in
-            parentView.addSubview(child.view)
+            parentView.addSubview(child.pinnableView)
             containmentCount += 1
         }.add(
             childView.pin(to: .centerY, .leading, .trailing)

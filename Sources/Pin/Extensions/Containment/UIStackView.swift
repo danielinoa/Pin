@@ -19,7 +19,7 @@ extension Pinnable where Self: UIStackView  {
     /// Adds the specified Pinnable's view as an arranged-subview under this `UIStackView`.
     public func stack(_ pinnables: [Pinnable]) -> Pinnable {
         add(pinnables).contain(using: { [weak self] in
-            self?.addArrangedSubview($0.view)
+            self?.addArrangedSubview($0.pinnableView)
         })
     }
 }

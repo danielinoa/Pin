@@ -17,7 +17,7 @@ extension Pinnable {
         constant: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
-        let constraint = view[keyPath: receiverKeyPath]
+        let constraint = pinnableView[keyPath: receiverKeyPath]
             .constraint(equalTo: targetAnchor, constant: constant)
             .setPriority(priority)
         return appending(constraint)
@@ -34,8 +34,8 @@ extension Pinnable {
         constant: CGFloat = .zero,
         priority: UILayoutPriority = .required
     ) -> Pinnable {
-        let constraint = view[keyPath: receiverKeyPath]
-            .constraint(equalTo: view[keyPath: targetKeyPath], constant: constant)
+        let constraint = pinnableView[keyPath: receiverKeyPath]
+            .constraint(equalTo: pinnableView[keyPath: targetKeyPath], constant: constant)
             .setPriority(priority)
         return appending(constraint)
     }

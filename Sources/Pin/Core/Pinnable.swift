@@ -8,10 +8,10 @@ import UIKit
 public protocol Pinnable {
 
     /// The view that constraints will be associated to.
-    var view: UIView { get }
+    var pinnableView: UIView { get }
 
     /// The list of pinnable children.
-    var children: [Pinnable] { get }
+    var pinnableChildren: [Pinnable] { get }
 
     /// The constraints' closures that are to be resolved by this node.
     var selfResolvables: [SelfResolvable] { get }
@@ -29,8 +29,8 @@ extension Pinnable {
     @discardableResult
     public func appending(_ superResolvables: SuperResolvable...) -> Pinnable {
         BasePinnable(
-            view: view,
-            children: children,
+            view: pinnableView,
+            children: pinnableChildren,
             selfResolvables: selfResolvables,
             superResolvables: self.superResolvables + superResolvables,
             containmentStrategy: containmentStrategy
@@ -41,8 +41,8 @@ extension Pinnable {
     @discardableResult
     public func appending(_ selfResolvables: SelfResolvable...) -> Pinnable {
         BasePinnable(
-            view: view,
-            children: children,
+            view: pinnableView,
+            children: pinnableChildren,
             selfResolvables: self.selfResolvables + selfResolvables,
             superResolvables: superResolvables,
             containmentStrategy: containmentStrategy
